@@ -1,6 +1,8 @@
 # my files to ignore
 Simple_Map/static/js/config.js
 
+Mapping_Single_Points/static/js/config.js
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

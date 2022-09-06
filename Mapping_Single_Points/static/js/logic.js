@@ -9,17 +9,19 @@ let map = L.map('mapid').setView([34.0522, -118.2437], 14);
 // // Add marker to the map for Los Angeles, CA
 // let marker = L.marker([34.0522, -118.2437]).addTo(map);
 
-// Add circle marker to the map using circle()
-L.circle([34.0522, -118.2437], {
-    radius: 100
- }).addTo(map);
+// // Add circle marker to the map using circle()
+// // radius measured in meters.
+// let marker = L.circle([34.0522, -118.2437], {
+//     radius: 100
+//  }).addTo(map);
 
-// // Add circle marker to the map using circleMarker()
-// L.circleMarker([34.0522, -118.2437], {
-//     radius: 300,
-//     color: "black",
-//     fillColor: "#ffffa1"
-// }).addTo(map);
+// Add circle marker to the map using circleMarker()
+// radius measured in pixels
+let marker = L.circleMarker([34.0522, -118.2437], {
+    radius: 300,
+    color: "black",
+    fillColor: "#ffffa1"
+}).addTo(map);
 
 
 // Create the tile layer that will be the background of our map

@@ -55,25 +55,47 @@ let earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/
 
 
 //---------------------------------------------------------------
-// Use variable to hold style attiributes and then grb GeoJSON data
+// Grab earthquake GeoJSON data
 //---------------------------------------------------------------
-let myStyle = {
-  color: "blue",
-  fillColor: "yellow",
-  weight: 1
-}
-
 d3.json(earthquakeData, function(data) {
-    console.log(data);
+  console.log(data);
+
+  // create function to declare style features
+  function styleInfo(feature) {
+      return {
+        opacity: 1,
+        fillOpacity: 1,
+        fillColor: "#ffae42",
+        color: "#000000",
+        radius: getRadius(feature.properties.mag),
+        stroke: true,
+        weight: 0.5
+      };
+  }
+
+  //create function for getRadius()
+  // earthquakes with radius = 0 will be plotted as 1
+  function getRadius(magnitude) {
+      if (magnitude === 0) {
+        return 1;
+      }
+      return magnitude *4;
+  }
+
+
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data, {
-    style: myStyle,
-    onEachFeature: function(features, layer) {
-        layer.bindPopup("<h2>Location: "+features.properties.place+"</h2>"+
-        "<h3>Magnitude: "+features.properties.mag+"</h3>")
-    }
-  })
-  .addTo(map);
+
+    // turn each feature into a circleMarker
+    pointToLayer: function(feature, latlng) {
+      console.log(data);
+      return L.circleMarker(latlng);
+    },
+
+    // add style by referencing the styleInfo function
+    style: styleInfo
+
+  }).addTo(map);
 });
 
 

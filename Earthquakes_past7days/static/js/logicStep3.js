@@ -15,13 +15,12 @@ maxZoom: 18,
 id: 'mapbox/satellite-streets-v11',
 accessToken: API_KEY
 });
+//---------------------------------------------------------------
 
-// // create variable to hold tile layer options
-// var baseMaps = {
-//     "Street": streetmap,
-//     "Dark": dark
-// }
+
+//---------------------------------------------------------------
 // Create a base layer that holds both maps.
+//---------------------------------------------------------------
 let baseMaps = {
     Streets: streets,
     Satellite: satelliteStreets
@@ -48,32 +47,68 @@ L.control.layers(baseMaps).addTo(map);
 
 
 //---------------------------------------------------------------
-// access earthquake data
+// Access earthquake data
 //---------------------------------------------------------------
 let earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 //---------------------------------------------------------------
 
 
 //---------------------------------------------------------------
-// Use variable to hold style attiributes and then grb GeoJSON data
+// Grab earthquake GeoJSON data and put it on the map
 //---------------------------------------------------------------
-let myStyle = {
-  color: "blue",
-  fillColor: "yellow",
-  weight: 1
-}
-
 d3.json(earthquakeData, function(data) {
-    console.log(data);
+  console.log(data);
+
+// ----- create function to declare style features -----
+  function styleInfo(feature) {
+      return {
+        opacity: 1,
+        fillOpacity: 1,
+        fillColor: getColor(feature.properties.mag),
+        color: "#000000",
+        radius: getRadius(feature.properties.mag),
+        stroke: true,
+        weight: 0.5
+      };
+  };
+
+// ----- create function to change marker size based on magnitude -----
+  function getRadius(magnitude) {
+    // earthquakes with radius = 0 will be plotted as 1  
+    if (magnitude === 0) {
+        return 1;
+      }
+      return magnitude *4;
+  };
+
+// ----- create function to change marker color based on magnitude -----
+  function getColor(magnitude) {
+    if (magnitude > 5) {return "#ea2c2c";}
+    if (magnitude > 4) {return "#ea822c";}
+    if (magnitude > 3) {return "#ee9c00";}
+    if (magnitude > 2) {return "#eecc00";}
+    if (magnitude > 1) {return "#d4ee00";}
+    {return "#98ee00";}
+  };
+
+
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data, {
-    style: myStyle,
-    onEachFeature: function(features, layer) {
-        layer.bindPopup("<h2>Location: "+features.properties.place+"</h2>"+
-        "<h3>Magnitude: "+features.properties.mag+"</h3>")
-    }
-  })
-  .addTo(map);
+
+    // turn each feature into a circleMarker
+    pointToLayer: function(feature, latlng) {
+      console.log(data);
+      return L.circleMarker(latlng);
+    },
+
+    // add style by referencing the styleInfo function
+    style: styleInfo,
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Magnitude: " + feature.properties.mag + 
+        "<br>Location: " + feature.properties.place);
+      }
+
+  }).addTo(map);
 });
 
 

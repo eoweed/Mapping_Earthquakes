@@ -48,7 +48,7 @@ L.control.layers(baseMaps).addTo(map);
 
 
 //---------------------------------------------------------------
-// access toronto airport data
+// access earthquake data
 //---------------------------------------------------------------
 let earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 //---------------------------------------------------------------

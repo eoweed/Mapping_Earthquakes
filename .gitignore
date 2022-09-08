@@ -13,6 +13,8 @@ GeoJSON_MappingAirports/static/js/config.js
 
 Mapping_GeoJSON_Linestrings/static/js/config.js
 
+Mapping_GeoJSON_Polygons/static/js/config.js
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

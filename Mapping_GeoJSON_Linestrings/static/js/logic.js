@@ -50,7 +50,7 @@ L.control.layers(baseMaps).addTo(map);
 //---------------------------------------------------------------
 // access toronto airport data
 //---------------------------------------------------------------
-let torontoData = "https://raw.githubusercontent.com/<GitHub_name>/Mapping_Earthquakes/main/torontoRoutes.json";
+let torontoData = "https://raw.githubusercontent.com/eoweed/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/Mapping_GeoJSON_Linestrings/static/data/torontoRoutes.json"
 //---------------------------------------------------------------
 
 
@@ -58,19 +58,44 @@ let torontoData = "https://raw.githubusercontent.com/<GitHub_name>/Mapping_Earth
 //---------------------------------------------------------------
 // Grabbing our GeoJSON data.
 //---------------------------------------------------------------
+// d3.json(torontoData, function(data) {
+//     console.log(data);
+//   // Creating a GeoJSON layer with the retrieved data.
+//   L.geoJSON(data, {
+//     color: "yellow",
+//     weight: 2,
+//     onEachFeature: function(features, layer) {
+//         layer.bindPopup("<h2>Airline: "+features.properties.airline+"</h2>"+
+//         "<h3>Destination: "+features.properties.dst+"</h3>")
+//     }
+//   })
+//   .addTo(map);
+// });
+//---------------------------------------------------------------
+
+
+//---------------------------------------------------------------
+// Use variable to hold style attiributes and then grb GeoJSON data
+//---------------------------------------------------------------
+let myStyle = {
+  color: "yellow",
+  weight: 2
+}
+
 d3.json(torontoData, function(data) {
     console.log(data);
   // Creating a GeoJSON layer with the retrieved data.
   L.geoJSON(data, {
+    style: myStyle,
     onEachFeature: function(features, layer) {
-        layer.bindPopup("<h2>"+features.properties.name+"</h2>"+
-        "<h3>ID: "+features.properties.id+"</h3>")
+        layer.bindPopup("<h2>Airline: "+features.properties.airline+"</h2>"+
+        "<h3>Destination: "+features.properties.dst+"</h3>")
     }
   })
-  
   .addTo(map);
 });
-//---------------------------------------------------------------
 
+
+//---------------------------------------------------------------
 
 

@@ -10,5 +10,4 @@
 - tectonic plate data
 - major earthquake data
 
-#### Tools:
-#### Leaflet, Mapbox, d3.json, JavaScript
+#### Tools: Leaflet, Mapbox, d3.json, JavaScript
